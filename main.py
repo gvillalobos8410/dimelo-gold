@@ -1,13 +1,15 @@
 import streamlit as st
 
-# --- 1. CONFIGURACION ---
-st.set_page_config(page_title="GOLD", layout="centered")
-
-# RESET TOTAL: Si no hay nombre, siempre P1
-if "n" not in st.session_state or st.session_state.n == "":
+# --- 1. RESET FORZADO (PAGINA 1 SIEMPRE AL INICIO) ---
+if "n" not in st.session_state:
     st.session_state.n = ""
     st.session_state.p = 1
 
+# Si entras y el nombre esta vacio, te devuelvo a la 1
+if st.session_state.n == "":
+    st.session_state.p = 1
+
+# Otros estados
 for k,v in {"l":"","sec":"Otros","tip":""}.items():
     if k not in st.session_state: st.session_state[k] = v
 
@@ -26,24 +28,23 @@ P2 = (
     "respaldo ante la DIAN. Beneficio, no miedo!"
 )
 
-# --- 3. ESTILO CSS (SCROLL LIBRE) ---
-CSS = """
+# --- 3. ESTILO CSS (SCROLL Y ESTETICA) ---
+st.markdown("""
 <style>
-    html, body, [data-testid="stAppViewContainer"] {
-        overflow-y: auto !important; height: auto;
+    html, body, [data-testid="stAppViewContainer"], .main {
+        overflow-y: auto !important; height: auto !important;
         font-family: sans-serif; background: #f8f9fa;
     }
     .card { border-left: 8px solid #D4AF37; padding: 15px; margin: 10px 0; background: #fff; }
     div.stButton > button { background: #1a1a1a !important; color: #D4AF37 !important; border-radius: 10px; font-weight: bold; width: 100%; }
 </style>
-"""
-st.markdown(CSS, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-# --- 4. LOGICA ---
+# --- 4. LOGICA DE PANTALLAS ---
 
 if st.session_state.p == 1:
     st.header("🏆 DIMELO GOLD")
-    st.markdown(f'<div class="card">{P1}</div>', True)
+    st.markdown(f'<div class="card"><b>LA MAGIA</b><br>{P1}</div>', True)
     nom = st.text_input("COMO TE LLAMAS?")
     if st.button("VAMOS! ➡️"):
         if nom:
@@ -52,7 +53,7 @@ if st.session_state.p == 1:
             st.rerun()
 
 elif st.session_state.p == 2:
-    if st.button("<- VOLVER"):
+    if st.button("<- VOLVER AL INICIO"):
         st.session_state.n = ""
         st.session_state.p = 1
         st.rerun()
@@ -67,14 +68,8 @@ elif st.session_state.p == 2:
         if st.button("CTA COBRO"): st.session_state.l = "Cuenta de Cobro"
     with c2:
         if st.button("COTIZACION"): st.session_state.l = "Cotizacion"
+    if st.session_state.l: st.info(f"RUTA: {st.session_state.l}")
     if st.session_state.l and st.session_state.tip:
         if st.button("🚀 HACER MAGIA!"):
             st.session_state.p = 3
             st.rerun()
-
-elif st.session_state.p == 3:
-    st.header("🎙️ MOTOR")
-    st.write("Procesando...")
-    if st.button("REGRESAR"):
-        st.session_state.p = 2
-        st.rerun()
