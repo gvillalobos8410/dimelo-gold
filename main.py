@@ -13,14 +13,12 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
     
-    /* ELIMINAR BLOQUEO DE SCROLL EN TODA LA APP */
     html, body, [data-testid="stAppViewContainer"], .main, .block-container {
         overflow-y: auto !important;
         height: auto !important;
         min-height: 100vh !important;
     }
 
-    /* Contenedor tipo Celular (Máximo 450px de ancho) */
     [data-testid="stAppViewContainer"] {
         max-width: 450px;
         margin: 0 auto;
@@ -40,7 +38,6 @@ st.markdown("""
     
     .highlight { color: #D4AF37; font-weight: 700; }
     
-    /* Botonería Shark Tank */
     div.stButton > button {
         background: #1a1a1a !important; color: #D4AF37 !important;
         border-radius: 12px; height: 3.5em; font-weight: 700;
@@ -48,7 +45,6 @@ st.markdown("""
         margin-bottom: 20px;
     }
 
-    /* Espaciado extra al final para asegurar el scroll */
     .footer-space { height: 100px; }
     </style>
     """, unsafe_allow_html=True)
@@ -68,7 +64,6 @@ if st.session_state.p == 1:
     
     nombre = st.text_input("¿CÓMO TE LLAMAS?", value=st.session_state.n, placeholder="Tu nombre y apellido")
     
-    st.markdown('<br>', unsafe_allow_html=True)
     if st.button("¡LISTO, VAMOS PA' ESA! ➡️"):
         if nombre:
             st.session_state.n = nombre
@@ -76,7 +71,7 @@ if st.session_state.p == 1:
             st.rerun()
     st.markdown('<div class="footer-space"></div>', unsafe_allow_html=True)
 
-# --- 4. PÁGINA 2: ARQUITECTURA DE RESPALDO (RESTAURADA Y CON SCROLL) ---
+# --- 4. PÁGINA 2: ARQUITECTURA DE RESPALDO ---
 elif st.session_state.p == 2:
     st.markdown(f'<h3 style="text-align:center; padding-top:20px;">🛡️ ¡VAMOS CON TODA, <span class="highlight">{st.session_state.n.upper()}</span>!</h3>', unsafe_allow_html=True)
     
@@ -89,14 +84,33 @@ elif st.session_state.p == 2:
     """, unsafe_allow_html=True)
 
     st.subheader("🖼️ TU IDENTIDAD")
-    up = st.file_uploader("Sube tu logo", label_visibility="collapsed")
-    if up: st.session_state.logo = True
+    st.file_uploader("Sube tu logo", label_visibility="collapsed")
     
     st.write("---")
     sectores = ['🌾 Agropecuario', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Construcción', '⚖️ Consultoría', '✨ Otro']
     st.session_state.sec = st.selectbox("¿EN QUÉ SECTOR TE MUEVES?", sectores)
     
     ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Venta de café especial")
-    if ta: st.session_state.tip = ta
+    if ta: 
+        st.session_state.tip = ta
 
-    st.
+    st.write("---")
+    st.subheader("🏛️ RESPALDO LEGAL (DIAN)")
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.button("📄 CTA. COBRO"): st.session_state.l = "Cuenta de Cobro"
+    with c2:
+        if st.button("🏛️ COTIZACIÓN"): st.session_state.l = "Cotización"
+            
+    if st.session_state.l:
+        st.success(f"Ruta: {st.session_state.l}")
+
+    if st.session_state.l and st.session_state.tip:
+        if st.button("🚀 AL MOTOR DE VOZ"):
+            st.session_state.p = 3
+            st.rerun()
+
+    if st.button("⬅️ VOLVER"):
+        st.session_state.p = 1
+        st.rerun()
+    st.markdown('<div class="footer-space"></div>', unsafe_allow_html=True)
