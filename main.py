@@ -1,6 +1,7 @@
 import streamlit as st
 
-# --- 1. PEDAGOGÍA DE LEY (VARIABLES CORTAS PARA EVITAR CORTES) ---
+# --- 1. PEDAGOGÍA (LEY DIMELO) ---
+# Fragmentado para evitar cortes de servidor
 P1_PED = (
     "¡Hola! No importa si estás empezando hoy o si ya tienes tu negocio andando, "
     "esta app es para ti. Vas a recibir un documento con imagen profesional y un "
@@ -22,76 +23,73 @@ P2_PED = (
 # --- 2. CONFIGURACIÓN E INICIALIZACIÓN ---
 st.set_page_config(page_title="DIMELO GOLD", layout="centered")
 
-# LÓGICA DE INICIO: Si el nombre está vacío, forzamos página 1
-if 'n' not in st.session_state: st.session_state.n = ''
-if 'p' not in st.session_state or st.session_state.n == '': 
+# BLINDAJE DE INICIO: Si no hay nombre, forzar Página 1 siempre
+if 'n' not in st.session_state: st.session_state.n = ""
+if 'p' not in st.session_state or st.session_state.n == "":
     st.session_state.p = 1
 
-# Otros estados
-for k, v in {'l':'', 'sec':'Otros', 'tip':''}.items():
+# Otros estados necesarios
+for k, v in {'l': '', 'sec': 'Otros', 'tip': ''}.items():
     if k not in st.session_state: st.session_state[k] = v
 
-# --- 3. ESTILO CSS (SCROLL Y ESTÉTICA GOLD) ---
+# --- 3. ESTILO CSS (SCROLL TOTAL Y ESTÉTICA GOLD) ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    
+    /* LIBERACIÓN DE SCROLL */
     html, body, [data-testid="stAppViewContainer"], .main, .block-container {
-        overflow-y: auto !important; height: auto !important;
-        min-height: 100vh !important; font-family: 'Montserrat';
-        background-color: #f4f4f4;
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f4f4f4 !important;
     }
+
     [data-testid="stAppViewContainer"] { 
-        max-width: 450px; margin: 0 auto; background: white;
-        border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        max-width: 450px; margin: 0 auto; 
+        background: #ffffff; border-radius: 20px; 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        padding-bottom: 60px;
     }
-    .card { border-left: 10px solid #D4AF37; padding: 25px; margin: 20px 0; background: #fff; }
-    .gold { color: #D4AF37; font-weight: 700; }
+    
+    .mentor-card { 
+        border-left: 10px solid #D4AF37; background: #ffffff; 
+        padding: 25px; margin: 20px 0; line-height: 1.6;
+    }
+    
+    .gold-text { color: #D4AF37; font-weight: 700; }
+    
     div.stButton > button { 
         background: #1a1a1a !important; color: #D4AF37 !important; 
-        border-radius: 12px; height: 3.5em; width: 100%; font-weight: bold;
+        border-radius: 12px; height: 3.5em; width: 100%; 
+        font-weight: bold; border: none; text-transform: uppercase;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- 4. PÁGINA 1: LA PROMESA ---
 if st.session_state.p == 1:
-    st.markdown("<h2 style='text-align:center; padding-top:20px;'>🏆 DIMELO <span class='gold'>GOLD</span></h2>", unsafe_allow_html=True)
-    st.markdown(f'<div class="card"><b>🤝 ¡TÚ DÍMELO, QUE YO HAGO LA MAGIA!</b><br><br>{P1_PED}</div>', unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center; padding-top:20px;'>🏆 DIMELO <span class='gold-text'>GOLD</span></h2>", unsafe_allow_html=True)
+    st.markdown(f'<div class="mentor-card"><b>🤝 ¡TÚ DÍMELO, QUE YO HAGO LA MAGIA!</b><br><br>{P1_PED}</div>', unsafe_allow_html=True)
     
-    nombre_i = st.text_input("¿CÓMO TE LLAMAS?", value=st.session_state.n)
-    if st.button("¡ESTOY LISTO, VAMOS CON TODA! ➡️"):
-        if nombre_i:
-            st.session_state.n = nombre_i
+    nombre_usuario = st.text_input("¿CÓMO TE LLAMAS?", value=st.session_state.n)
+    
+    if st.button("¡VAMOS CON TODA! ➡️"):
+        if nombre_usuario:
+            st.session_state.n = nombre_usuario
             st.session_state.p = 2
             st.rerun()
 
-# --- 5. PÁGINA 2: ARQUITECTURA ---
+# --- 5. PÁGINA 2: ARQUITECTURA (ESCUDO COMERCIAL) ---
 elif st.session_state.p == 2:
-    if st.button("← VOLVER"):
+    if st.button("← VOLVER AL INICIO"):
+        st.session_state.n = "" # Limpiamos para que el inicio forzado funcione
         st.session_state.p = 1
         st.rerun()
     
-    st.markdown(f"<h3 style='text-align:center;'>🛡️ RESPALDO: <span class='gold'>{st.session_state.n.upper()}</span></h3>", unsafe_allow_html=True)
-    st.markdown(f'<div class="card"><b>💡 TU ESCUDO COMERCIAL</b><br><br>{P2_PED}</div>', unsafe_allow_html=True)
+    st.markdown(f"<h3 style='text-align:center;'>🛡️ RESPALDO: <span class='gold-text'>{st.session_state.n.upper()}</span></h3>", unsafe_allow_html=True)
+    st.markdown(f'<div class="mentor-card"><b>💡 TU ESCUDO COMERCIAL</b><br><br>{P2_PED}</div>', unsafe_allow_html=True)
     
-    st.session_state.sec = st.selectbox("Sector:", ["🌾 Agro", "🛠️ Técnico", "🏗️ Obra", "🍰 Gastro", "✨ Otros"])
+    st.session
     
-    # Ejemplo dinámico simplificado para evitar errores de sintaxis
-    desc = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Escribe aquí...")
-    if desc: st.session_state.tip = desc
-
-    st.write("---")
-    st.write("<b>¿CÓMO TE PRESENTAS HOY?</b>", unsafe_allow_html=True)
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("📄 CTA COBRO"): st.session_state.l = "Cuenta de Cobro"
-    with c2:
-        if st.button("🏛️ COTIZACION"): st.session_state.l = "Cotización"
-            
-    if st.session_state.l:
-        st.info(f"Ruta: {st.session_state.l.upper()}")
-
-    if st.session_state.l and st.session_state.tip:
-        if st.button("🚀 TODO LISTO, ¡A HACER MAGIA!"):
-            st.session_state.p = 3
-            st.rerun()
