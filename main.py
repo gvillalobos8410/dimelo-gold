@@ -1,85 +1,111 @@
 import streamlit as st
 
-# 1. CONFIGURACIÓN DE ENTORNO ÉLITE
+# --- 1. CONFIGURACIÓN DE NIVEL ÉLITE ---
 st.set_page_config(page_title="DIMELO GOLD", page_icon="🎙️", layout="centered")
 
-# 2. CEREBRO DE FLUJO (UX DIRIGIDA)
-if 'paso' not in st.session_state:
-    st.session_state.paso = 1
+# Estética Neon, Gold y Scroll Fluido
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
+    
+    .stApp {
+        background: radial-gradient(circle at top, #1a0b2e 0%, #050505 100%) !important;
+        color: #f0f0f0 !important;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .main-logo {
+        text-align: center;
+        padding: 40px 0;
+        font-size: 42px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+    }
+    .purple { color: #9d4edd; text-shadow: 0 0 20px rgba(157, 78, 221, 0.6); }
+    .gold { color: #D4AF37; text-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
 
-# 3. ENCABEZADO DE AUTORIDAD
-st.title("🎙️ DIMÉLO GOLD")
-st.markdown("---")
+    .card-scroll {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(157, 78, 221, 0.2);
+        padding: 30px;
+        border-radius: 30px;
+        margin-bottom: 40px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
 
-# --- PASO 1: LA IDENTIDAD (EL CIMIENTO) ---
-if st.session_state.paso == 1:
-    st.subheader("Fase 1: La Firma de Autoridad")
-    
-    st.info("""
-    **CÁTEDRA DEL PROFESOR:** Bienvenido al entorno donde tu palabra cobra valor. 
-    Antes de activar la ingeniería de transformación, debemos establecer quién firma el éxito. 
-    En el mercado de alto nivel, **tu nombre no es un dato, es tu activo más preciado**. 
-    Es la firma que respalda tu visión técnica y espiritual.
-    """)
-    
-    nombre = st.text_input("¿Quién lidera esta propuesta hoy?", placeholder="Ej: Germán Villalobos")
-    
-    if st.button("ESTABLECER MI AUTORIDAD ➡️"):
-        if nombre:
-            st.session_state.nombre = nombre
-            st.session_state.paso = 2
-            st.rerun()
-        else:
-            st.error("Líder, el sistema requiere tu nombre para proceder.")
+    .pedagogia-title {
+        color: #D4AF37;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        display: block;
+    }
 
-# --- PASO 2: EL BLINDAJE (EL RESPALDO DIAN) ---
-elif st.session_state.paso == 2:
-    st.subheader(f"Fase 2: Blindaje Legal, {st.session_state.nombre}")
+    /* Botón Logo DIMELO (Sustituye al micrófono) */
+    .dimelo-btn-container {
+        text-align: center;
+        margin: 30px 0;
+    }
     
-    st.warning("""
-    **AVISO LEGAL DIAN - EL ESTÁNDAR DE PODER:** Tu talento es inmenso, pero para que sea cobrable, debe estar blindado. 
-    La formalidad ante la DIAN no es una carga, es tu **armadura profesional**. 
-    Definir tu ruta legal asegura que tu propuesta sea respetada por empresas de alto nivel.
-    """)
+    .dimelo-logo-btn {
+        background: linear-gradient(135deg, #7b2cbf 0%, #9d4edd 100%);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid #D4AF37;
+        box-shadow: 0 0 30px rgba(157, 78, 221, 0.5);
+        cursor: pointer;
+        transition: 0.3s;
+    }
     
-    sector = st.selectbox("Sector Estratégico de Influencia:", 
-                          ["🌾 Agropecuario (Café/Tomate)", 
-                           "🛠️ Servicios Técnicos y Mantenimiento", 
-                           "⚖️ Consultoría y Marketing Pro", 
-                           "✨ Otro Sector de Autoridad"])
-    
-    ruta = st.radio("Modalidad de Respaldo Jurídico:", 
-                    ["Cuenta de Cobro (Persona Natural)", 
-                     "Cotización Formal (Empresa/Régimen Común)"])
-    
-    if st.button("ACTIVAR MOTOR DE TRANSFORMACIÓN 🚀"):
-        st.session_state.sector = sector
-        st.session_state.paso = 3
-        st.rerun()
+    .dimelo-logo-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 50px rgba(212, 175, 55, 0.6);
+    }
 
-# --- PASO 3: LA TRANSMUTACIÓN (VOZ A ORO) ---
-elif st.session_state.paso == 3:
-    st.subheader("Fase 3: Transmutación de Lenguaje")
-    
-    st.success(f"""
-    **ESTÁS ACOMPAÑADO:** {st.session_state.nombre}, tienes frente a ti una herramienta de 
-    ingeniería poderosa. No te preocupes por la técnica ahora; **háblame con la pasión de tu 
-    liderazgo**. Mi algoritmo tomará tus palabras básicas y las elevará a un documento 
-    profesional de élite. **Por esta precisión es que tu cliente paga.**
-    """)
-    
-    st.markdown("### 🔴 TE ESCUCHO")
-    st.caption(f"Configuración activa para el sector: {st.session_state.sector}")
-    
-    if st.button("INICIAR GRABACIÓN POR VOZ 🎤"):
-        st.info("Escuchando tu visión... Preparando la autoridad comercial.")
-    
-    st.write("---")
-    with st.expander("⌨️ ¿PREFIERES UN BORRADOR ESCRITO?"):
-        idea_texto = st.text_area("Describe tu propuesta aquí:")
-        if st.button("TRANSFORMAR A NIVEL GOLD ✨"):
-            st.success(f"Analizando propuesta... Elevando el lenguaje de {st.session_state.nombre} a estándar global.")
+    div.stButton > button {
+        background: linear-gradient(90deg, #7b2cbf, #9d4edd) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 15px !important;
+        height: 3.5em !important;
+        font-weight: 700 !important;
+        width: 100% !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-    if st.button("⬅️ Reiniciar Registro"):
-        st.session_state.paso = 1
-        st.rerun()
+# --- 2. ENCABEZADO DIMELO ---
+st.markdown("""
+<div class="main-logo">
+    <span class="purple">DIMÉLO</span><span class="gold">GOLD</span>
+</div>
+<p style='text-align: center; color: #888; font-size: 14px;'>INGENIERÍA DE AUTORIDAD COMERCIAL</p>
+""", unsafe_allow_html=True)
+
+# --- 3. SCROLL INMERSIVO (PEDAGOGÍA BLINDADA) ---
+
+# FASE 1: IDENTIDAD
+st.markdown('<div class="card-scroll">', unsafe_allow_html=True)
+st.markdown('<span class="pedagogia-title">Fase 1: La Firma de Autoridad</span>', unsafe_allow_html=True)
+st.markdown("""
+**CÁTEDRA DEL PROFESOR:** Bienvenido al entorno donde tu palabra cobra valor. 
+En el mercado de alto nivel, **tu nombre no es un dato, es tu activo más preciado**. 
+Es la firma que respalda tu visión técnica y espiritual. Sin ella, no hay puente de confianza.
+""")
+nombre = st.text_input("¿Quién lidera hoy?", placeholder="Ej: Germán Villalobos")
+st.markdown('</div>', unsafe_allow_html=True)
+
+# FASE 2: BLINDAJE LEGAL
+st.markdown('<div class="card-scroll">', unsafe_allow_html=True)
+st.markdown('<span class="pedagogia-title">Fase 2: Blindaje Legal DIAN</span>', unsafe_allow_html=True)
+st.markdown("""
+**AVISO LEGAL - EL ESTÁNDAR DE PODER:** "Tu talento es inmenso, pero para que sea cobrable, debe estar blindado. 
+La formalidad ante la DIAN no es una carga, es tu **armadura profesional**. 
+Definir tu ruta legal asegura que tu
