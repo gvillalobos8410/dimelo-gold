@@ -3,7 +3,7 @@ import streamlit as st
 # --- 1. CONFIGURACIÓN ---
 st.set_page_config(page_title="DIMELO GOLD", layout="centered")
 
-# Persistencia
+# Persistencia Blindada
 for key, val in {'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False}.items():
     if key not in st.session_state:
         st.session_state[key] = val
@@ -40,19 +40,15 @@ st.markdown("""
         width: 100%; border: none; text-transform: uppercase;
     }
 
-    /* Botón de Volver (Fresco y Contemporáneo) */
-    .stButton button[kind="secondary"] {
+    /* Botón de Volver Sutil (Reemplazo de 'kind' por CSS) */
+    .stButton > button[key="back_btn"] {
         background: transparent !important;
         color: #999 !important;
         border: 1px solid #eee !important;
         height: 2.5em !important;
         font-size: 0.8em !important;
-        text-transform: none !important;
         border-radius: 30px !important;
-    }
-    .stButton button[kind="secondary"]:hover {
-        color: #1a1a1a !important;
-        border-color: #D4AF37 !important;
+        text-transform: none !important;
     }
 
     .footer-space { height: 80px; }
@@ -70,58 +66,25 @@ if st.session_state.p == 1:
             st.session_state.p = 2
             st.rerun()
 
-# --- 4. PÁGINA 2: ARQUITECTURA DE MARCA Y PEDAGOGÍA LEGAL ---
+# --- 4. PÁGINA 2: ESTRATEGIA Y PEDAGOGÍA ---
 elif st.session_state.p == 2:
-    # Botón Volver sutil arriba
-    if st.button("← Volver al inicio", kind="secondary"):
+    # Botón Volver sutil (Sin el parámetro 'kind' que causó el error)
+    if st.button("← Volver al inicio"):
         st.session_state.p = 1
         st.rerun()
 
     st.markdown(f'<h3 style="text-align:center;">🛡️ ¡VAMOS CON TODA, <span class="highlight">{st.session_state.n.upper()}</span>!</h3>', unsafe_allow_html=True)
     
-    # Entrada Estratégica y Pedagógica
+    # Pedagogía Estratégica para el Informal
     st.markdown("""
     <div class="gold-box">
         <b>💡 CONSEJO DEL PROFESOR:</b><br>
         Para que un negocio crezca de verdad, hay que "vestirlo de gala". No es solo por cumplir, es porque tener una 
-        <span class="highlight">imagen seria</span> y estar al día con las reglas del juego te abre puertas a clientes que pagan mejor.<br><br>
-        Si te formalizas (aunque sea paso a paso), te evitas dolores de cabeza con la <b>DIAN</b> a futuro y demuestras que tu trabajo tiene respaldo real.
+        <span class="highlight">imagen seria</span> te abre puertas a clientes que pagan mejor.<br><br>
+        Si te formalizas paso a paso, te evitas líos con la <b>DIAN</b> después y demuestras que tu trabajo es de verdad. ¡Yo te ayudo a que no sea un enredo!
     </div>
     """, unsafe_allow_html=True)
 
     st.subheader("🖼️ TU IDENTIDAD")
     st.write("<small>Sube tu logo para que la propuesta lleve tu sello.</small>", unsafe_allow_html=True)
-    st.file_uploader("Sube tu logo", label_visibility="collapsed")
-    
-    st.write("---")
-    sectores = ['🌾 Agro', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Construcción', '⚖️ Consultoría', '✨ Otro']
-    st.session_state.sec = st.selectbox("¿EN QUÉ SECTOR TE MUEVES?", sectores)
-    
-    ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Mantenimiento de equipos")
-    if ta: st.session_state.tip = ta
-
-    st.write("---")
-    
-    st.subheader("🏛️ ¿CÓMO QUIERES RESPALDARTE?")
-    st.write("<small>Escoge la opción que mejor te quede hoy. Si no sabes, yo te guío.</small>", unsafe_allow_html=True)
-    
-    c1, c2 = st.columns(2)
-    with c1:
-        if st.button("📄 CTA. COBRO"): 
-            st.session_state.l = "Cuenta de Cobro"
-            st.toast("Opción ágil para servicios directos.")
-    with c2:
-        if st.button("🏛️ COTIZACIÓN"): 
-            st.session_state.l = "Cotización"
-            st.toast("Opción formal para grandes contratos.")
-            
-    if st.session_state.l:
-        st.info(f"Ruta seleccionada: **{st.session_state.l}**")
-
-    st.write("")
-    if st.session_state.l and st.session_state.tip:
-        if st.button("🚀 AL MOTOR DE VOZ"):
-            st.session_state.p = 3
-            st.rerun()
-    
-    st.markdown('<div class="footer-space"></div>', unsafe_allow_html=True)
+    st.file_uploader("Sube tu logo",
