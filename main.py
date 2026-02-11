@@ -1,13 +1,13 @@
 import streamlit as st
 
-# --- 1. CONFIGURACIÓN DE INGENIERÍA ---
+# --- 1. CONFIGURACIÓN DE ALTO NIVEL ---
 st.set_page_config(page_title="DIMELO GOLD", layout="centered")
 
 # Persistencia de Estado Blindada
 for k, v in {'p':1, 'n':'', 'l':'', 'sec':'Otro', 'tip':'', 'logo':False}.items():
     if k not in st.session_state: st.session_state[k] = v
 
-# --- 2. AMBIENTE DE INTERFAZ (CSS MODULAR PARA EVITAR ERRORES) ---
+# --- 2. AMBIENTE DE INTERFAZ (CSS MODULAR) ---
 estilo_celular = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
@@ -33,26 +33,34 @@ estilo_celular = """
 """
 st.markdown(estilo_celular, unsafe_allow_html=True)
 
-# --- 3. PÁGINA 1: EL DESPERTAR DE LA MARCA (RESTAURADA) ---
+# --- 3. PÁGINA 1: EL SOCIO TECNOLÓGICO (REDISEÑADA) ---
 if st.session_state.p == 1:
     st.markdown('<h2 style="text-align:center; padding-top:20px;">🏆 DIMELO <span class="highlight">GOLD</span></h2>', unsafe_allow_html=True)
+    
     st.markdown("""
     <div class="mentor-card">
-        <h3 style="margin-top:0;">👋 ¡EPA, EMPRENDEDOR!</h3>
-        Qué bueno tenerte acá. Sabemos que le metes el alma a lo que haces, pero a veces el cliente no ve todo ese esfuerzo. <b>¡Eso se acaba hoy!</b><br><br>
-        Yo te voy a acompañar como tu <span class="highlight">profesor y socio</span> para que tu talento se vea impecable.
+        <h3 style="margin-top:0;">🚀 ¡LLEVEMOS TU NEGOCIO A OTRO NIVEL!</h3>
+        Bienvenido a tu nueva estación de trabajo. Aquí no estás solo; somos tus <b>compañeros de crecimiento</b>.<br><br>
+        ¿Alguna vez has sentido que tu idea es genial pero te falta "labia" técnica para cobrar lo que vales? 
+        Nuestra <span class="highlight">Inteligencia Artificial</span> está aquí para facilitar tus cotizaciones: 
+        toma tu lenguaje natural, lo pule, le da un tono profesional y técnico, y lo convierte en un documento poderoso.<br><br>
+        <i>¡Prepárate para cerrar negocios como los grandes!</i>
     </div>
     """, unsafe_allow_html=True)
     
+    st.subheader("Para empezar esta alianza...")
     n = st.text_input("¿CÓMO TE LLAMAS?", value=st.session_state.n, placeholder="Tu nombre y apellido")
-    if st.button("¡LISTO, VAMOS PA' ESA! ➡️"):
+    
+    if st.button("¡VAMOS A FACILITAR TU NEGOCIO! ➡️"):
         if n:
             st.session_state.n = n
             st.session_state.p = 2
             st.rerun()
+        else:
+            st.warning("Oye, un buen socio siempre se presenta. Dime tu nombre.")
     st.markdown('<div class="spacer"></div>', unsafe_allow_html=True)
 
-# --- 4. PÁGINA 2: ARQUITECTURA DE RESPALDO (PEDAGOGÍA SHARK) ---
+# --- 4. PÁGINA 2: ARQUITECTURA DE RESPALDO ---
 elif st.session_state.p == 2:
     if st.button("← Volver al inicio"):
         st.session_state.p = 1
@@ -62,9 +70,10 @@ elif st.session_state.p == 2:
     
     st.markdown("""
     <div class="mentor-card">
-        <h3 style="margin-top:0;">💡 CONSEJO DEL PROFESOR</h3>
-        Viste tu negocio de gala. Una <span class="highlight">imagen seria</span> te abre puertas a mejores clientes. 
-        Estar al día te evita líos con la <b>DIAN</b> y demuestra que tu trabajo tiene respaldo real. ¡Yo te guío para que sea por beneficio, no por miedo!
+        <h3 style="margin-top:0;">💡 EL ESCUDO COMERCIAL</h3>
+        Para que esa IA trabaje con fuerza, necesitamos darle <b>autoridad</b>. 
+        Vestir tu negocio de gala con un logo y una ruta legal clara (DIAN) no es un trámite, 
+        es tu armadura para que los clientes confíen en ti de inmediato. ¡Yo te guío!
     </div>
     """, unsafe_allow_html=True)
 
@@ -81,14 +90,14 @@ elif st.session_state.p == 2:
         '⚖️ Consultoría Profesional', 
         '✨ Otro'
     ]
-    st.session_state.sec = st.selectbox("¿En qué campo te destacas?", sectores)
+    st.session_state.sec = st.selectbox("¿En qué campo eres experto?", sectores)
     
-    ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Venta de café especial")
+    ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Venta de equipos industriales")
     if ta: st.session_state.tip = ta
 
     st.write("---")
     st.subheader("🏛️ ¿CÓMO QUIERES RESPALDARTE?")
-    st.write("<small>Escoge la opción que mejor te quede hoy. Estar legal es tu armadura comercial.</small>", unsafe_allow_html=True)
+    st.write("<small>Dales seguridad a tus clientes con la ruta legal que prefieras hoy.</small>", unsafe_allow_html=True)
     
     c1, c2 = st.columns(2)
     with c1:
@@ -97,10 +106,10 @@ elif st.session_state.p == 2:
         if st.button("🏛️ COTIZACIÓN"): st.session_state.l = "Cotización"
             
     if st.session_state.l:
-        st.success(f"Ruta: **{st.session_state.l.upper()}**")
+        st.info(f"Ruta seleccionada: **{st.session_state.l.upper()}**")
 
     if st.session_state.l and st.session_state.tip:
-        if st.button("🚀 AL MOTOR DE VOZ"):
+        if st.button("🚀 ABRIR MOTOR DE PRECISIÓN"):
             st.session_state.p = 3
             st.rerun()
     st.markdown('<div class="spacer"></div>', unsafe_allow_html=True)
