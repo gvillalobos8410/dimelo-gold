@@ -1,16 +1,16 @@
 import streamlit as st
 
 # --- 1. CONFIGURACIÓN DE ALTO NIVEL ---
-st.set_page_config(page_title="DIMELO GOLD | Business Elite", layout="wide")
+st.set_page_config(page_title="DIMELO GOLD | De Emprendedor a Pro", layout="wide")
 
-# Persistencia de Estado (El cerebro de la App)
+# Cerebro de la App (Persistencia)
 for key, val in {
     'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False
 }.items():
     if key not in st.session_state:
         st.session_state[key] = val
 
-# --- 2. INTERFAZ GOLD SUPREME (SCROLL TOTAL) ---
+# --- 2. INTERFAZ GOLD SUPREME (AMIGABLE Y FLUIDA) ---
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
@@ -25,77 +25,84 @@ st.markdown("""
     .mentor-box {
         border-left: 10px solid #D4AF37;
         background: white;
-        padding: 40px;
-        border-radius: 0 25px 25px 0;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.05);
-        margin: 30px 0;
+        padding: 35px;
+        border-radius: 0 20px 20px 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        margin: 25px 0;
+        line-height: 1.6;
     }
 
     .gold-title {
         color: #1a1a1a;
         font-weight: 700;
         letter-spacing: -1px;
-        line-height: 1.1;
     }
 
     .highlight { color: #D4AF37; font-weight: 700; }
 
-    /* Botón Estilo Shark Tank */
+    /* Botón con fuerza de cierre */
     div.stButton > button {
         background: linear-gradient(135deg, #1a1a1a 0%, #333 100%) !important;
         color: #D4AF37 !important;
-        border-radius: 12px;
-        height: 4.5em;
+        border-radius: 15px;
+        height: 4em;
         font-weight: 700;
         width: 100%;
         border: none;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        transition: 0.4s;
+        transition: 0.3s;
     }
     div.stButton > button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        transform: scale(1.01);
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. PÁGINA 1: EL UMBRAL DE LA AUTORIDAD ---
+# --- 3. PÁGINA 1: EL INICIO DEL CAMINO ---
 if st.session_state.p == 1:
-    # Encabezado de Marca
     st.markdown('<h1 class="gold-title">🏆 DIMELO <span class="highlight">GOLD</span></h1>', unsafe_allow_html=True)
     st.write("---")
 
-    # Bloque del Mentor (Pedagogía Shark)
+    # Habla el amigo experto (Pedagogía Amigable)
     st.markdown("""
     <div class="mentor-box">
-        <h3>🎙️ HABLA EL MENTOR:</h3>
-        <p>Bienvenido al sistema que dejará atrás la informalidad. Como PYME, tu mayor debilidad no es el tamaño, es la 
-        <span class="highlight">percepción de riesgo</span> del cliente. Si tu cotización parece amateur, tu precio será castigado.</p>
-        <p><b>REGLA DE ORO:</b> La autoridad comercial comienza con una firma responsable. En este paso inicial, establecemos 
-        quién lidera la visión detrás de esta propuesta.</p>
+        <h3>👋 ¡Epa, Emprendedor! Qué bueno tenerte acá.</h3>
+        <p>Sabemos que le metes el alma a lo que haces, pero a veces el cliente no ve todo ese esfuerzo porque la propuesta se ve "floja" o muy informal. 
+        <b>¡Eso se acaba hoy!</b></p>
+        <p>Yo te voy a acompañar como tu profesor y socio para que tu talento se vea <span class="highlight">impecable</span>. 
+        Vamos a traducir esa idea que tienes en la cabeza a un documento que inspire respeto y cierre el negocio de una.</p>
+        <p><i>Primero lo primero: ¿Con quién tengo el gusto? Vamos a ponerle nombre al responsable de este gran proyecto.</i></p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Input de Autoridad
-    with st.container():
-        st.subheader("IDENTIFICACIÓN DEL LÍDER")
-        nombre = st.text_input(
-            "¿Cuál es el nombre del profesional responsable de este negocio?", 
-            value=st.session_state.n,
-            placeholder="Ej: Germán Villalobos"
-        )
-        
-        st.write("")
-        if st.button("VALIDAR IDENTIDAD Y AVANZAR AL BLINDAJE ➡️"):
-            if nombre:
-                st.session_state.n = nombre
-                st.session_state.p = 2
-                st.rerun()
-            else:
-                st.error("🚨 Un líder no avanza en el anonimato. Por favor, ingresa tu nombre.")
+    # Registro de Identidad
+    st.subheader("Tu nombre es tu firma")
+    nombre = st.text_input(
+        "¿Cómo te llamas?", 
+        value=st.session_state.n,
+        placeholder="Escribe tu nombre y apellido"
+    )
+    
+    st.write("")
+    if st.button("¡LISTO, VAMOS PA' ESA! ➡️"):
+        if nombre:
+            st.session_state.n = nombre
+            st.session_state.p = 2
+            st.rerun()
+        else:
+            st.warning("Oye, no seas tímido. Necesito tu nombre para que la propuesta salga a tu nombre.")
 
-# --- 4. SIGUIENTES PÁGINAS (ESTRUCTURA DE ESPERA) ---
+# --- 4. PREPARACIÓN PÁGINA 2 ---
 elif st.session_state.p == 2:
-    st.info(f"🛡️ {st.session_state.n}, estamos listos para la arquitectura legal. Próximo paso: Sello de Marca y DIAN.")
-    if st.button("ATRÁS"): st.session_state.p = 1; st.rerun()
+    st.markdown(f'<h1 class="gold-title">🛡️ ¡TODO LISTO, <span class="highlight">{st.session_state.n.upper()}</span>!</h1>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="mentor-box">
+        <p>Ya dimos el primer paso. Ahora vamos a vestir el negocio de gala. 
+        Necesito que definamos tu <b>imagen</b> y tu <b>respaldo legal</b> ante la DIAN. 
+        No te asustes, que yo te explico por qué esto te hace ver como un profesional de peso.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("⬅️ VOLVER"):
+        st.session_state.p = 1
+        st.rerun()
