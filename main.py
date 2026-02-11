@@ -1,22 +1,21 @@
 import streamlit as st
 
-# --- 1. INTERRUPTOR DE SEGURIDAD (BLINDAJE DE INICIO) ---
+# --- 1. CONFIGURACIÓN E INICIALIZACIÓN ---
+st.set_page_config(page_title="DIMELO GOLD", layout="centered")
+
+# Blindaje de Inicio: Forzar Página 1 si no hay nombre
 if 'n' not in st.session_state:
     st.session_state.n = ""
     st.session_state.p = 1
 
-# Si el nombre está vacío, obligamos a que la página sea la 1
 if st.session_state.n == "":
     st.session_state.p = 1
 
-# Inicializar otros estados
-for k, v in {'l': '', 'sec': '✨ Otros', 'tip': ''}.items():
+# Inicializar estados de selección
+for k, v in {'l': '', 'sec': 'Otros', 'tip': ''}.items():
     if k not in st.session_state: st.session_state[k] = v
 
-# --- 2. CONFIGURACIÓN ---
-st.set_page_config(page_title="DIMELO GOLD", layout="centered")
-
-# --- 3. ESTILO CSS (SCROLL LIBERADO Y ESTÉTICA GOLD) ---
+# --- 2. ESTILO CSS (ESTÉTICA GOLD SUPREME + SCROLL TOTAL) ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -26,17 +25,19 @@ st.markdown("""
         height: auto !important;
         min-height: 100vh !important;
         font-family: 'Montserrat', sans-serif;
-        background-color: #f4f4f4 !important;
+        background-color: #f8f9fa !important;
     }
 
     [data-testid="stAppViewContainer"] { 
         max-width: 450px; margin: 0 auto; background: white;
         border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        padding-bottom: 60px;
     }
     
     .mentor-card { 
         border-left: 10px solid #D4AF37; background: #ffffff; 
         padding: 25px; margin: 20px 0; line-height: 1.6;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.03);
     }
     
     .gold { color: #D4AF37; font-weight: 700; }
@@ -49,9 +50,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 4. LÓGICA DE PANTALLAS ---
+# --- 3. LÓGICA DE PANTALLAS ---
 
-# PÁGINA 1: BIENVENIDA (LA PUERTA ÚNICA)
+# PÁGINA 1: BIENVENIDA (LA PROMESA)
 if st.session_state.p == 1:
     st.markdown("<h2 style='text-align:center; padding-top:20px;'>🏆 DIMELO <span class='gold'>GOLD</span></h2>", unsafe_allow_html=True)
     st.markdown("""
@@ -71,10 +72,10 @@ if st.session_state.p == 1:
             st.session_state.p = 2
             st.rerun()
 
-# PÁGINA 2: CONFIGURACIÓN
+# PÁGINA 2: ARQUITECTURA (EL ESCUDO)
 elif st.session_state.p == 2:
     if st.button("← VOLVER AL INICIO"):
-        st.session_state.n = "" # Limpiamos para que el interruptor lo mande a P1
+        st.session_state.n = "" 
         st.session_state.p = 1
         st.rerun()
     
@@ -87,9 +88,12 @@ elif st.session_state.p == 2:
     </div>
     """, unsafe_allow_html=True)
     
-    st.session_state.sec = st.selectbox("¿En qué sector te mueves?", ["🌾 Agro", "🛠️ Técnico", "🏗️ Obra", "🍰 Gastro", "✨ Otros"])
+    st.session_state.sec = st.selectbox("¿En qué sector te mueves?", 
+                                        ["🌾 Agro", "🛠️ Técnico", "🏗️ Obra", "🍰 Gastro", "⚖️ Servicios", "✨ Otros"])
     
-    actividad = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Venta de café, mantenimiento...")
+    actividad = st.text_input("¿QUÉ HACES EXACTAMENTE?", 
+                              value=st.session_state.tip, 
+                              placeholder="Ej: Mantenimiento preventivo, Venta de café...")
     if actividad: st.session_state.tip = actividad
 
     st.write("---")
@@ -98,4 +102,18 @@ elif st.session_state.p == 2:
     with c1:
         if st.button("📄 CTA COBRO"): st.session_state.l = "Cuenta de Cobro"
     with c2:
-        if st.button("
+        if st.button("🏛️ COTIZACIÓN"): st.session_state.l = "Cotización"
+            
+    if st.session_state.l:
+        st.info(f"Ruta seleccionada: {st.session_state.l.upper()}")
+
+    if st.session_state.l and st.session_state.tip:
+        if st.button("🚀 TODO LISTO, ¡A HACER MAGIA!"):
+            st.session_state.p = 3
+            st.rerun()
+
+# PÁGINA 3: MOTOR (DICTADO)
+elif st.session_state.p == 3:
+    st.markdown("<h2 style='text-align:center;'>🎙️ MOTOR DE VOZ</h2>", unsafe_allow_html=True)
+    st.markdown(f'<div class="mentor-card">Listo <span class="gold">{st.session_state.n}</span>, suéltalo todo que yo hago la magia.</div>', unsafe_allow_html=True)
+    if st.button("⬅️ RECONFIGUR
