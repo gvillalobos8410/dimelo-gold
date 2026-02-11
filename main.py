@@ -1,28 +1,32 @@
 import streamlit as st
 
-# --- 1. BANCO DE TEXTOS (VARIABLES CORTAS PARA CERO CORTES) ---
-T1 = "🏆 DIMELO GOLD"
-T2 = "🛡️ TU ESCUDO COMERCIAL"
-P1_A = "¡Hola! No importa si estás empezando hoy o si ya tienes "
-P1_B = "tu negocio andando, esta app es para ti. Recibirás un "
-P1_C = "documento con imagen profesional y lenguaje técnico. "
-P1_D = "Cumple con la DIAN si decides crecer. ¡Tú solo dímelo!"
-
-P2_A = "Aquí no hay enredos. Vamos a darle autoridad a lo que haces. "
-P2_B = "Tu imagen y ruta legal son tu armadura para cobrar lo justo "
-P2_C = "y demostrar respaldo ante la DIAN. ¡Beneficio, no miedo!"
-
-# --- 2. CONFIGURACIÓN ---
+# --- 1. CONFIGURACION INICIAL ---
 st.set_page_config(page_title="DIMELO GOLD", layout="centered")
 
-if 'n' not in st.session_state or st.session_state.n == "":
+# RESET FORZADO: Si no hay nombre, siempre Pagina 1
+if "n" not in st.session_state or st.session_state.n == "":
     st.session_state.n = ""
     st.session_state.p = 1
 
-for k, v in {'l':'', 'sec':'Otros', 'tip':''}.items():
+# Inicializar otros estados
+for k, v in {"l":"", "sec":"Otros", "tip":""}.items():
     if k not in st.session_state: st.session_state[k] = v
 
-# --- 3. ESTILO CSS (SINTAXIS BLINDADA) ---
+# --- 2. PEDAGOGIA (BLOQUES CORTOS) ---
+P1_TEXTO = (
+    "Hola! No importa si estas empezando hoy o ya tienes tu negocio andando, "
+    "esta app es para ti. Recibiras un documento con imagen profesional y "
+    "lenguaje tecnico. Cumple con la DIAN si decides crecer. "
+    "Tu solo dimelo como parcero, que yo hago la magia."
+)
+
+P2_TEXTO = (
+    "Aqui no hay enredos. Vamos a darle autoridad a lo que haces. "
+    "Tu imagen y ruta legal son tu armadura para cobrar lo justo y "
+    "demostrar respaldo ante la DIAN. Beneficio, no miedo!"
+)
+
+# --- 3. ESTILO CSS (SCROLL LIBRE) ---
 CSS = """
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -44,13 +48,12 @@ CSS = """
 """
 st.markdown(CSS, unsafe_allow_html=True)
 
-# --- 4. NAVEGACIÓN ---
+# --- 4. LOGICA DE PANTALLAS ---
 
-# PÁGINA 1
+# PAGINA 1: BIENVENIDA
 if st.session_state.p == 1:
-    st.markdown(f"<h2 style='text-align:center;'>{T1}</h2>", True)
-    c1 = f'<div class="card"><b>MAGIA DIMELO</b><br><br>{P1_A}{P1_B}{P1_C}{P1_D}</div>'
-    st.markdown(c1, True)
+    st.markdown("<h2 style='text-align:center;'>🏆 DIMELO GOLD</h2>", True)
+    st.markdown(f'<div class="card"><b>MAGIA DIMELO</b><br><br>{P1_TEXTO}</div>', True)
     
     nom = st.text_input("COMO TE LLAMAS?", value=st.session_state.n)
     if st.button("VAMOS! ➡️"):
@@ -59,30 +62,25 @@ if st.session_state.p == 1:
             st.session_state.p = 2
             st.rerun()
 
-# PÁGINA 2
+# PAGINA 2: CONFIGURACION
 elif st.session_state.p == 2:
     if st.button("<- VOLVER"):
         st.session_state.n = ""
         st.session_state.p = 1
         st.rerun()
     
-    st.markdown(f"<h3 style='text-align:center;'>{T2}</h3>", True)
-    user = st.session_state.n.upper()
-    st.markdown(f"<h4 style='text-align:center;'>HOLA, <span class='gold'>{user}</span></h4>", True)
-    
-    c2 = f'<div class="card"><b>ESCUDO</b><br>{P2_A}{P2_B}{P2_C}</div>'
-    st.markdown(c2, True)
+    st.markdown(f"<h3 style='text-align:center;'>HOLA, <span class='gold'>{st.session_state.n.upper()}</span></h3>", True)
+    st.markdown(f'<div class="card"><b>ESCUDO COMERCIAL</b><br>{P2_TEXTO}</div>', True)
     
     st.session_state.sec = st.selectbox("Sector:", ["Agro", "Tecnico", "Obra", "Gastro", "Otros"])
-    
     ta = st.text_input("QUE HACES EXACTAMENTE?", value=st.session_state.tip)
     if ta: st.session_state.tip = ta
 
     st.write("---")
-    c_1, c_2 = st.columns(2)
-    with c_1:
+    c1, c2 = st.columns(2)
+    with c1:
         if st.button("CTA COBRO"): st.session_state.l = "Cuenta de Cobro"
-    with c_2:
+    with c2:
         if st.button("COTIZACION"): st.session_state.l = "Cotizacion"
             
     if st.session_state.l:
@@ -92,3 +90,9 @@ elif st.session_state.p == 2:
         if st.button("🚀 HACER MAGIA!"):
             st.session_state.p = 3
             st.rerun()
+
+# PAGINA 3: MOTOR
+elif st.session_state.p == 3:
+    st.markdown("<h2 style='text-align:center;'>🎙️ MOTOR DE VOZ</h2>", True)
+    st.write("Listo para procesar...")
+    if st.
