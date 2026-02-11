@@ -3,7 +3,7 @@ import streamlit as st
 # --- 1. CONFIGURACIÓN DE ESCENARIO ---
 st.set_page_config(page_title="DIMELO GOLD", page_icon="🎙️", layout="centered")
 
-# ADN Visual Blindado (Evitando errores de comillas)
+# ADN Visual Blindado
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
@@ -16,13 +16,21 @@ st.markdown("""
     
     .header-logo {
         text-align: center;
-        padding: 50px 10px;
+        padding: 30px 10px 10px 10px;
+    }
+
+    /* Contenedor de la imagen del logo */
+    .logo-img {
+        width: 120px;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 10px rgba(157, 78, 221, 0.5));
     }
     
     .logo-text {
-        font-size: 42px;
+        font-size: 36px;
         font-weight: 800;
         letter-spacing: -1px;
+        margin: 0;
     }
     
     .purple { color: #9d4edd; text-shadow: 0 0 15px rgba(157, 78, 221, 0.5); }
@@ -59,8 +67,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 2. INTERFAZ DE INICIO ---
+# --- 2. ENCABEZADO CON LOGO ---
 
+# Si tienes el logo en GitHub, puedes poner la URL aquí. 
+# Si no, usaremos un icono visual por ahora.
 st.markdown("""
 <div class="header-logo">
     <div class="logo-text">
@@ -70,14 +80,18 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Lógica de flujo simple
+# --- INSERCIÓN DEL LOGO (OPCIONAL) ---
+# Si quieres subir tu imagen, descomenta la línea de abajo y pon el enlace.
+# st.image("URL_DE_TU_LOGO_EN_GITHUB", width=120)
+
+# Lógica de flujo
 if 'paso' not in st.session_state:
     st.session_state.paso = 1
 
 # --- BLOQUE 1: IDENTIDAD ---
 st.markdown('<div class="card">', unsafe_allow_html=True)
 st.markdown('<span class="label-gold">🛡️ Paso 1: Identidad del Líder</span>', unsafe_allow_html=True)
-st.write("Tu nombre es la firma que respalda tu visión técnica y comercial.")
+st.write("Tu nombre es la firma que respalda tu visión.")
 nombre = st.text_input("NOMBRE COMPLETO:", placeholder="Ej: Germán Villalobos")
 
 if nombre and st.session_state.paso == 1:
@@ -86,11 +100,11 @@ if nombre and st.session_state.paso == 1:
         st.rerun()
 st.markdown('</div>', unsafe_allow_html=True)
 
-# --- BLOQUE 2: BLINDAJE LEGAL ---
+# --- BLOQUES SIGUIENTES (OCULTOS HASTA QUE SE REGISTRE EL NOMBRE) ---
 if st.session_state.paso >= 2:
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<span class="label-gold">🏛️ Paso 2: Respaldo DIAN</span>', unsafe_allow_html=True)
-    st.write(f"Perfecto, **{nombre}**. Define tu ruta legal para asegurar el estatus de tu oferta.")
+    st.write(f"Perfecto, **{nombre}**. Define tu ruta legal.")
     
     sector = st.selectbox("SECTOR ESTRATÉGICO:", ["🌾 Agropecuario", "🛠️ Servicios Técnicos", "⚖️ Consultoría", "✨ Otro"])
     ruta = st.radio("MODALIDAD DE COBRO:", ["Cuenta de Cobro", "Cotización Formal"])
@@ -101,15 +115,8 @@ if st.session_state.paso >= 2:
             st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- BLOQUE 3: EL MOTOR ---
 if st.session_state.paso >= 3:
     st.markdown("""
     <div class="card" style="border: 2px solid #D4AF37; text-align: center;">
-        <span class="label-gold">🎙️ Paso 3: Motor de Precisión Activo</span>
-        <h2 style='color: white; margin: 10px 0;'>TE ESCUCHO</h2>
-        <p style='font-size: 14px; color: #9d4edd;'>Dicta tu propuesta comercial ahora.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    if st.button("🔴 INICIAR GRABACIÓN POR VOZ"):
-        st.info("🎤 Procesando tu visión a nivel Gold Supreme...")
+        <span class="label-gold">🎙️ Paso 3: Motor Activo</span>
+        <h2 style='color: white; margin: 10px
