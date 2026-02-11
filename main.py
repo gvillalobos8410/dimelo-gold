@@ -1,6 +1,6 @@
 import streamlit as st
 
-# --- 1. BASE DE DATOS Y TEXTOS (FUERA DE LA LOGICA PARA EVITAR CORTES) ---
+# --- 1. DATOS Y TEXTOS ---
 INFO_P1 = "Hola! No importa si estas empezando o ya tienes camino recorrido, esta app es para ti. Recibiras un documento con imagen pro y lenguaje tecnico. Si decides crecer, esto cumple con la DIAN. Tu solo dimelo, que yo hago la magia!"
 INFO_P2 = "Tu imagen y tu ruta legal son tu armadura para cobrar lo justo y que el cliente confie en ti. Yo te guio!"
 
@@ -21,7 +21,7 @@ if 'l' not in st.session_state: st.session_state.l = ''
 if 'sec' not in st.session_state: st.session_state.sec = 'Otros'
 if 'tip' not in st.session_state: st.session_state.tip = ''
 
-# --- 3. ESTILO CSS ---
+# --- 3. ESTILO CSS DINAMICO ---
 img_url = sectores_map[st.session_state.sec]['img'] if st.session_state.p == 2 else ""
 bg = f"background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('{img_url}');" if st.session_state.p == 2 else "background-color: #ffffff;"
 
@@ -37,7 +37,7 @@ st.markdown(f"""
 # --- 4. LOGICA DE NAVEGACION ---
 if st.session_state.p == 1:
     st.markdown("<h2 style='text-align:center;'>🏆 DIMELO GOLD</h2>", unsafe_allow_html=True)
-    st.markdown(f'<div class="card"><b>TÚ DÍMELO, QUE YO HAGO LA MAGIA!</b><br><br>{INFO_P1}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card"><b>TU DIMELO, QUE YO HAGO LA MAGIA!</b><br><br>{INFO_P1}</div>', unsafe_allow_html=True)
     nombre = st.text_input("COMO TE LLAMAS?", value=st.session_state.n)
     if st.button("VAMOS CON TODA! ➡️"):
         if nombre:
@@ -47,3 +47,30 @@ if st.session_state.p == 1:
 
 elif st.session_state.p == 2:
     if st.button("<- Volver"):
+        st.session_state.p = 1
+        st.rerun()
+    
+    st.markdown(f"<h3 style='text-align:center;'>🛡️ RESPALDO: {st.session_state.n.upper()}</h3>", unsafe_allow_html=True)
+    st.markdown(f'<div class="card">{INFO_P2}</div>', unsafe_allow_html=True)
+    
+    st.session_state.sec = st.selectbox("Sector de negocio:", list(sectores_map.keys()))
+    ej_text = sectores_map[st.session_state.sec]['ej']
+    
+    desc = st.text_input("QUE HACES EXACTAMENTE?", value=st.session_state.tip, placeholder=ej_text)
+    if desc:
+        st.session_state.tip = desc
+
+    st.write("---")
+    st.write("<b>COMO TE PRESENTAS HOY?</b>", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.button("CTA COBRO"):
+            st.session_state.l = "Cuenta de Cobro"
+    with c2:
+        if st.button("COTIZACION"):
+            st.session_state.l = "Cotizacion"
+            
+    if st.session_state.l and st.session_state.tip:
+        if st.button("🚀 HACER MAGIA!"):
+            st.session_state.p = 3
+            st.
