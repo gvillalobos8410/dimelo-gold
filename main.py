@@ -1,159 +1,110 @@
 import streamlit as st
 
-# --- 1. CONFIGURACIÓN DE AMBIENTE ---
-st.set_page_config(page_title="DIMELO GOLD | Estación de Trabajo", layout="wide")
+# --- 1. CONFIGURACIÓN DE ALTO NIVEL ---
+st.set_page_config(page_title="DIMELO GOLD", layout="centered")
 
-# Cerebro de persistencia
-for key, val in {
-    'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False
-}.items():
+# Persistencia Blindada (No se toca)
+for key, val in {'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False}.items():
     if key not in st.session_state:
         st.session_state[key] = val
 
-# --- 2. INGENIERÍA DE INTERFAZ (CSS SHARK) ---
+# --- 2. INTERFAZ MÓVIL GOLD SUPREME (ESTILO IPHONE/ANDROID) ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
     
-    /* Configuración del Lienzo */
-    html, body, [data-testid="stAppViewContainer"] {
-        background-color: #f4f7f6;
-        overflow-y: auto !important;
-    }
-    
-    .stApp {
-        max-width: 1100px;
+    /* Forzar visualización tipo Celular en PC */
+    [data-testid="stAppViewContainer"] {
+        max-width: 450px;
         margin: 0 auto;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        background-color: #ffffff;
+        box-shadow: 0 0 50px rgba(0,0,0,0.05);
     }
+    
+    html, body { background-color: #f1f1f1; font-family: 'Montserrat', sans-serif; }
 
-    /* Tarjetas de Trabajo */
-    .work-card {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-        border: 1px solid #e1e8e5;
-        margin-bottom: 25px;
+    .gold-box { 
+        border-left: 8px solid #D4AF37; background: #fdfdfd; 
+        padding: 25px; border-radius: 10px; margin: 20px 0;
+        line-height: 1.6; font-size: 0.95em;
     }
-
-    /* Cuadro del Profesor (Pedagogía Amigable) */
-    .profesor-box {
-        background: #1a1a1a;
-        color: #D4AF37;
-        padding: 30px;
-        border-radius: 15px;
-        margin-bottom: 30px;
-        border-left: 10px solid #D4AF37;
-    }
-
-    .profesor-box h3 { color: #D4AF37 !important; margin-top:0; }
-    .profesor-box p { color: #ffffff; font-size: 1.1em; line-height: 1.6; }
-
-    /* Estilo de Inputs y Selects */
-    .stSelectbox, .stTextInput, .stFileUploader {
-        margin-bottom: 20px;
-    }
-
-    /* Botonera de Acción */
+    
+    .highlight { color: #D4AF37; font-weight: 700; }
+    
+    /* Botonería Pro */
     div.stButton > button {
-        background: #D4AF37 !important;
-        color: #1a1a1a !important;
-        border-radius: 12px;
-        height: 3.8em;
-        font-weight: 700;
-        width: 100%;
-        border: none;
-        transition: 0.4s;
-        text-transform: uppercase;
-    }
-    div.stButton > button:hover {
-        background: #1a1a1a !important;
-        color: #D4AF37 !important;
-        transform: translateY(-2px);
+        background: #1a1a1a !important; color: #D4AF37 !important;
+        border-radius: 12px; height: 3.5em; font-weight: 700;
+        width: 100%; border: none; text-transform: uppercase;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. LÓGICA DE NAVEGACIÓN ---
-
-# PÁGINA 1: EL INICIO (BREVE REPASO)
+# --- 3. PÁGINA 1: EL DESPERTAR DE LA MARCA (RESTAURADA) ---
 if st.session_state.p == 1:
-    st.markdown('<div class="work-card">', unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center; color: #1a1a1a;'>🏆 DIMELO GOLD</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #666;'>Transformando ideas en documentos de autoridad.</p>", unsafe_allow_html=True)
+    st.markdown('<h2 style="text-align:center;">🏆 DIMELO <span class="highlight">GOLD</span></h2>', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="profesor-box">
-        <h3>👋 ¡Epa, Emprendedor!</h3>
-        <p>Soy tu profesor de negocios. Estoy aquí para que esa idea que tienes se convierta en una propuesta que dé gusto leer. 
-        Primero, dime tu nombre para saber con quién voy a trabajar hoy.</p>
+    <div class="gold-box">
+        <b>👋 ¡EPA, EMPRENDEDOR!</b><br>
+        Qué bueno tenerte acá. Sabemos que le metes el alma a lo que haces, pero a veces el cliente no ve todo ese esfuerzo. 
+        <b>¡Eso se acaba hoy!</b><br><br>
+        Yo te voy a acompañar como tu profesor y socio para que tu talento se vea <span class="highlight">impecable</span>.
     </div>
     """, unsafe_allow_html=True)
     
-    st.session_state.n = st.text_input("MI NOMBRE ES:", value=st.session_state.n, placeholder="Escribe aquí...")
+    nombre = st.text_input("¿CÓMO TE LLAMAS?", value=st.session_state.n, placeholder="Tu nombre y apellido")
     
-    if st.button("EMPEZAR LA REINGENIERÍA ➡️"):
-        if st.session_state.n:
+    if st.button("¡LISTO, VAMOS PA' ESA! ➡️"):
+        if nombre:
+            st.session_state.n = nombre
             st.session_state.p = 2
             st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
 
-# PÁGINA 2: ARQUITECTURA DE MARCA (EL CORAZÓN DE LA INTERFAZ)
+# --- 4. PÁGINA 2: ARQUITECTURA DE RESPALDO (RESTAURADA) ---
 elif st.session_state.p == 2:
-    st.markdown(f"### 📍 ESTACIÓN DE TRABAJO: {st.session_state.n.upper()}")
+    st.markdown(f'<h3 style="text-align:center;">🛡️ ¡VAMOS CON TODA, <span class="highlight">{st.session_state.n.upper()}</span>!</h3>', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="profesor-box">
-        <h3>🛡️ VISTAMOS EL NEGOCIO DE GALA</h3>
-        <p>Un emprendedor con clase sabe que <b>la imagen y la ley</b> no son estorbos, son su escudo. 
-        Si tienes un logo y cumples con la DIAN, el cliente sabe que no eres un aparecido. ¡Vamos a blindar esa confianza!</p>
+    <div class="gold-box">
+        <b>🛡️ VISTAMOS EL NEGOCIO DE GALA</b><br>
+        Un emprendedor con clase sabe que la imagen y la ley no son estorbos, son su escudo. 
+        Si tienes un logo y cumples con la <span class="highlight">DIAN</span>, el cliente sabe que eres un profesional de peso.
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2, gap="large")
+    # Identidad
+    st.subheader("🖼️ TU IDENTIDAD")
+    up = st.file_uploader("Sube tu logo", label_visibility="collapsed")
+    if up: st.session_state.logo = True
+    
+    # Sector Blindado
+    sectores = ['🌾 Agropecuario', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Construcción', '⚖️ Consultoría', '✨ Otro']
+    st.session_state.sec = st.selectbox("¿EN QUÉ SECTOR TE MUEVES?", sectores)
+    
+    ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Venta de café especial")
+    if ta: st.session_state.tip = ta
 
+    st.write("---")
+    
+    # Legalidad DIAN Blindada
+    st.subheader("🏛️ RESPALDO LEGAL (DIAN)")
+    col1, col2 = st.columns(2)
     with col1:
-        st.markdown('<div class="work-card">', unsafe_allow_html=True)
-        st.subheader("🖼️ TU IDENTIDAD")
-        st.write("Tu logo es tu promesa de calidad.")
-        up = st.file_uploader("Sube tu logo", label_visibility="collapsed")
-        if up: st.session_state.logo = True
-        
-        st.write("---")
-        sectores = ['🌾 Agropecuario', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Construcción', '⚖️ Consultoría', '✨ Otro']
-        st.session_state.sec = st.selectbox("¿EN QUÉ SECTOR TE MUEVES?", sectores)
-        ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip, placeholder="Ej: Mantenimiento de plantas eléctricas")
-        if ta: st.session_state.tip = ta
-        st.markdown('</div>', unsafe_allow_html=True)
-
+        if st.button("📄 CTA. COBRO"): st.session_state.l = "Cuenta de Cobro"
     with col2:
-        st.markdown('<div class="work-card">', unsafe_allow_html=True)
-        st.subheader("🏛️ RESPALDO LEGAL (DIAN)")
-        st.write("¿Cómo vamos a presentar este cobro?")
-        
-        st.markdown("""
-        <small>💡 <b>Nota del Profesor:</b> 
-        - <b>Cuenta de Cobro:</b> Si eres persona natural.
-        - <b>Cotización:</b> Si ya tienes empresa formal.</small>
-        """, unsafe_allow_html=True)
-        
-        st.write("")
-        if st.button("📄 RUTA: CUENTA DE COBRO"):
-            st.session_state.l = "Cuenta de Cobro"
+        if st.button("🏛️ COTIZACIÓN"): st.session_state.l = "Cotización"
             
-        if st.button("🏛️ RUTA: COTIZACIÓN FORMAL"):
-            st.session_state.l = "Cotización"
-            
-        if st.session_state.l:
-            st.success(f"Ruta elegida: {st.session_state.l}")
-        st.markdown('</div>', unsafe_allow_html=True)
+    if st.session_state.l:
+        st.success(f"Ruta: {st.session_state.l}")
 
-    # Botón de paso final
     if st.session_state.l and st.session_state.tip:
-        if st.button("🚀 TODO LISTO, VAMOS AL MOTOR DE VOZ"):
+        if st.button("🚀 AL MOTOR DE VOZ"):
             st.session_state.p = 3
             st.rerun()
 
-    if st.button("⬅️ VOLVER AL INICIO"):
+    if st.button("⬅️ VOLVER"):
         st.session_state.p = 1
         st.rerun()
