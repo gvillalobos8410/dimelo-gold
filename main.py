@@ -1,144 +1,101 @@
 import streamlit as st
 
-# --- 1. CONFIGURACIÓN E INICIALIZACIÓN ---
-st.set_page_config(page_title="DIMELO GOLD", layout="wide")
+# --- 1. CONFIGURACIÓN DE ALTO NIVEL ---
+st.set_page_config(page_title="DIMELO GOLD | Business Elite", layout="wide")
 
-# Inicialización de estado blindada
-if 'p' not in st.session_state: st.session_state.p = 1
-if 'n' not in st.session_state: st.session_state.n = ''
-if 'l' not in st.session_state: st.session_state.l = ''
-if 'tip' not in st.session_state: st.session_state.tip = ''
-if 'sec' not in st.session_state: st.session_state.sec = 'Otro'
+# Persistencia de Estado (El cerebro de la App)
+for key, val in {
+    'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False
+}.items():
+    if key not in st.session_state:
+        st.session_state[key] = val
 
-# --- 2. ESTÉTICA GOLD SUPREME (SCROLL LIBERADO) ---
+# --- 2. INTERFAZ GOLD SUPREME (SCROLL TOTAL) ---
 st.markdown("""
     <style>
-    /* LIBERACIÓN DE SCROLL TOTAL */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+    
     html, body, [data-testid="stAppViewContainer"] {
         overflow-y: auto !important;
         height: auto !important;
+        font-family: 'Montserrat', sans-serif;
+        background-color: #fcfcfc;
     }
-    .main .block-container {
-        max-width: 900px;
-        padding-bottom: 150px; /* Margen de seguridad para scroll */
+
+    .mentor-box {
+        border-left: 10px solid #D4AF37;
+        background: white;
+        padding: 40px;
+        border-radius: 0 25px 25px 0;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.05);
+        margin: 30px 0;
     }
-    
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-    html, body, [class*="st-"] { font-family: 'Montserrat', sans-serif; }
-    
-    .gold-box { 
-        border-left: 8px solid #D4AF37; background: white; 
-        padding: 30px; border-radius: 15px; margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+    .gold-title {
+        color: #1a1a1a;
+        font-weight: 700;
+        letter-spacing: -1px;
+        line-height: 1.1;
     }
+
     .highlight { color: #D4AF37; font-weight: 700; }
-    
-    div.stButton > button { 
-        background: #1a1a1a !important; color: #D4AF37 !important; 
-        border-radius: 12px; height: 3.8em; font-weight: 700; 
-        width: 100%; border: none; transition: 0.3s;
+
+    /* Botón Estilo Shark Tank */
+    div.stButton > button {
+        background: linear-gradient(135deg, #1a1a1a 0%, #333 100%) !important;
+        color: #D4AF37 !important;
+        border-radius: 12px;
+        height: 4.5em;
+        font-weight: 700;
+        width: 100%;
+        border: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.4s;
     }
-    div.stButton > button:hover { transform: scale(1.02); }
+    div.stButton > button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. PÁGINA 1: IDENTIDAD Y AUTORIDAD ---
+# --- 3. PÁGINA 1: EL UMBRAL DE LA AUTORIDAD ---
 if st.session_state.p == 1:
-    st.title("🏆 DIMELO GOLD")
-    st.subheader("El estándar de oro para líderes con visión comercial.")
-    
-    st.markdown(f"""
-    <div class="gold-box">
-        <b>MENSAJE DE AUTORIDAD:</b><br>
-        En el mercado de alto nivel, tu nombre es tu mayor activo. 
-        Este registro valida tu <span class="highlight">identidad comercial</span> 
-        para que cada propuesta generada tenga el peso de tu trayectoria profesional.
-    </div>
-    """, unsafe_allow_html=True)
-    
-    nombre = st.text_input("PARA COMENZAR, ¿QUIÉN LIDERA ESTA PROPUESTA?", value=st.session_state.n)
-    if st.button("INICIAR REGISTRO DE AUTORIDAD ➡️"):
-        if nombre:
-            st.session_state.n = nombre
-            st.session_state.p = 2
-            st.rerun()
+    # Encabezado de Marca
+    st.markdown('<h1 class="gold-title">🏆 DIMELO <span class="highlight">GOLD</span></h1>', unsafe_allow_html=True)
+    st.write("---")
 
-# --- 4. PÁGINA 2: REGISTRO BLINDADO (DIAN Y SECTORES) ---
-elif st.session_state.p == 2:
-    st.header(f"🛡️ ARQUITECTURA DE RESPALDO: {st.session_state.n.upper()}")
-    
+    # Bloque del Mentor (Pedagogía Shark)
     st.markdown("""
-    <div class="gold-box">
-        <b>PEDAGOGÍA DEL REGISTRO:</b><br>
-        Un cierre efectivo requiere <span class="highlight">Imagen</span>, 
-        <span class="highlight">Especialidad</span> y <span class="highlight">Legalidad</span>. 
-        Cumplir con los estándares de la <b>DIAN</b> no es opcional, es lo que 
-        te diferencia de la competencia informal.
+    <div class="mentor-box">
+        <h3>🎙️ HABLA EL MENTOR:</h3>
+        <p>Bienvenido al sistema que dejará atrás la informalidad. Como PYME, tu mayor debilidad no es el tamaño, es la 
+        <span class="highlight">percepción de riesgo</span> del cliente. Si tu cotización parece amateur, tu precio será castigado.</p>
+        <p><b>REGLA DE ORO:</b> La autoridad comercial comienza con una firma responsable. En este paso inicial, establecemos 
+        quién lidera la visión detrás de esta propuesta.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2, gap="large")
-    
-    with col1:
-        st.subheader("🖼️ SELLO DE MARCA")
-        st.write("Sube tu logo. Quien no tiene imagen, no proyecta seguridad.")
-        up = st.file_uploader("Cargar logo", label_visibility="collapsed")
-        if up: 
-            st.success("✨ Marca vinculada.")
-        else:
-            st.warning("🚨 Recomendación: Sin logo, la propuesta pierde autoridad visual.")
+    # Input de Autoridad
+    with st.container():
+        st.subheader("IDENTIFICACIÓN DEL LÍDER")
+        nombre = st.text_input(
+            "¿Cuál es el nombre del profesional responsable de este negocio?", 
+            value=st.session_state.n,
+            placeholder="Ej: Germán Villalobos"
+        )
         
-        st.write("---")
-        sectores = ['🌾 Agropecuario', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Obra', '⚖️ Consultoría', '✨ Otro']
-        st.session_state.sec = st.selectbox("¿CUÁL ES TU SECTOR ESTRATÉGICO?", sectores)
-        ta = st.text_input("DESCRIBE TU ACTIVIDAD (Ej: Venta de café especial):", value=st.session_state.tip)
-        if ta: st.session_state.tip = ta
+        st.write("")
+        if st.button("VALIDAR IDENTIDAD Y AVANZAR AL BLINDAJE ➡️"):
+            if nombre:
+                st.session_state.n = nombre
+                st.session_state.p = 2
+                st.rerun()
+            else:
+                st.error("🚨 Un líder no avanza en el anonimato. Por favor, ingresa tu nombre.")
 
-    with col2:
-        st.subheader("🏛️ RESPALDO LEGAL (AVISO DIAN)")
-        st.info("Define tu ruta oficial para validación tributaria.")
-        if st.button("📄 RUTA: CUENTA DE COBRO"):
-            st.session_state.l = "Sencilla"
-        st.write(" ")
-        if st.button("🏛️ RUTA: COTIZACIÓN EMPRESARIAL"):
-            st.session_state.l = "Formal"
-            
-        if st.session_state.l:
-            st.success(f"Configurado: {st.session_state.l.upper()}")
-
-    if st.session_state.l and st.session_state.tip:
-        st.write("---")
-        if st.button("FINALIZAR REGISTRO Y ABRIR MOTOR 🚀"):
-            st.session_state.p = 3
-            st.rerun()
-
-# --- 5. PÁGINA 3: EL MOTOR DE PRECISIÓN (MAGIA DE VOZ) ---
-elif st.session_state.p == 3:
-    st.header("🎙️ MOTOR DE PRECISIÓN GOLD")
-    
-    st.markdown(f"""
-    <div class="gold-box">
-        ✨ <b>LA IA HACE LA MAGIA:</b><br>
-        Dímelo sencillo, como un café entre amigos. Mi sistema interpretará tu 
-        visión de <b>{st.session_state.sec}</b> y la profesionalizará al instante.
-    </div>
-    """, unsafe_allow_html=True)
-    
-    if st.button("🔴 PULSA PARA GRABAR TU IDEA COMERCIAL"):
-        st.info("🎤 El sistema te escucha... Cuéntame tu visión.")
-
-    with st.expander("⌨️ OPCIÓN: PREFIERO ESCRIBIR"):
-        ti = st.text_area("Escribe tu idea aquí:", height=150)
-        
-    if st.button("✨ TRANSFORMAR MI IDEA A NIVEL GOLD"):
-        res = ti if ti else "Voz procesada con éxito"
-        st.session_state.g = f"**{st.session_state.tip.upper()} - PROPUESTA ÉLITE:** {res.upper()}"
-        st.session_state.p = 4
-        st.rerun()
-
-elif st.session_state.p == 4:
-    st.header("💎 ENTREGABLE FINAL")
-    st.markdown(f'<div class="gold-box">{st.session_state.g}</div>', unsafe_allow_html=True)
-    if st.button("🔄 REALIZAR NUEVO DICTADO"):
-        st.session_state.p = 3
-        st.rerun()
+# --- 4. SIGUIENTES PÁGINAS (ESTRUCTURA DE ESPERA) ---
+elif st.session_state.p == 2:
+    st.info(f"🛡️ {st.session_state.n}, estamos listos para la arquitectura legal. Próximo paso: Sello de Marca y DIAN.")
+    if st.button("ATRÁS"): st.session_state.p = 1; st.rerun()
