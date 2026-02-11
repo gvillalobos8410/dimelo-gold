@@ -8,7 +8,6 @@ for k, v in {'p':1, 'n':'', 'l':'', 'sec':'Otros', 'tip':''}.items():
     if k not in st.session_state: st.session_state[k] = v
 
 # --- 2. MAPA DE SECTORES (AMBIENTACIÓN REALISTA) ---
-# Usamos comillas sencillas dentro de los diccionarios para evitar conflictos
 sectores = {
     'Agro': {'ej': 'Ej: Venta de 10 cargas de cafe pergamino...', 'img': 'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=800'},
     'Tecnico': {'ej': 'Ej: Mantenimiento de motores diesel...', 'img': 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800'},
@@ -17,7 +16,7 @@ sectores = {
     'Otros': {'ej': 'Ej: Describe aqui tu servicio...', 'img': 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800'}
 }
 
-# --- 3. AMBIENTE DE INTERFAZ (SCROLL FORZADO Y CSS MODULAR) ---
+# --- 3. AMBIENTE DE INTERFAZ (SCROLL Y ESTÉTICA) ---
 img_fondo = sectores[st.session_state.sec]['img'] if st.session_state.p == 2 else ""
 bg_style = f"linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('{img_fondo}')" if img_fondo else "#ffffff"
 
@@ -56,7 +55,7 @@ st.markdown(f'''
 </style>
 ''', unsafe_allow_html=True)
 
-# --- 4. PÁGINA 1: LA PROMESA (LEY DIMELO) ---
+# --- 4. PÁGINA 1: LA PROMESA ---
 if st.session_state.p == 1:
     st.markdown("<h2 style='text-align:center; padding-top:20px;'>🏆 DIMELO <span class='gold-text'>GOLD</span></h2>", unsafe_allow_html=True)
     
@@ -76,14 +75,14 @@ if st.session_state.p == 1:
         if nombre:
             st.session_state.n = nombre
             st.session_state.p = 2
-            st.experimental_rerun() if hasattr(st, 'experimental_rerun') else st.rerun()
+            st.rerun()
     st.markdown('<div class="footer-spacer"></div>', unsafe_allow_html=True)
 
-# --- 5. PÁGINA 2: ARQUITECTURA (LEY DIMELO) ---
+# --- 5. PÁGINA 2: ARQUITECTURA ---
 elif st.session_state.p == 2:
     if st.button("← Volver"):
         st.session_state.p = 1
-        st.experimental_rerun() if hasattr(st, 'experimental_rerun') else st.rerun()
+        st.rerun()
     
     st.markdown(f"<h3 style='text-align:center;'>🛡️ RESPALDO: <span class='gold-text'>{st.session_state.n.upper()}</span></h3>", unsafe_allow_html=True)
     
@@ -115,5 +114,9 @@ elif st.session_state.p == 2:
     if st.session_state.l and st.session_state.tip:
         if st.button("🚀 TODO LISTO, ¡A HACER MAGIA!"):
             st.session_state.p = 3
-            st.experimental_rerun() if hasattr(st, 'experimental_rerun') else st.rerun()
+            st.rerun()
     st.markdown('<div class="footer-spacer"></div>', unsafe_allow_html=True)
+
+# --- 6. PÁGINA 3 (MANTENIMIENTO DEL FLUJO) ---
+elif st.session_state.p == 3:
+    st.markdown("<h2 style='text-align:center;'>🎙️ MOTOR DE VOZ</h2>", unsafe_allow_html
