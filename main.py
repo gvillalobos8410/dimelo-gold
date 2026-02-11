@@ -1,127 +1,93 @@
 import streamlit as st
 
-# --- 1. CONFIGURACIÓN E INICIALIZACIÓN ---
+# --- 1. CONFIGURACIÓN Y PERSISTENCIA ---
 st.set_page_config(page_title="DIMELO GOLD", layout="wide")
 
-# Persistencia de datos
 for key, val in {
     'p': 1, 'n': '', 'l': '', 'sec': 'Otro', 'tip': '', 'g': '', 'logo': False
 }.items():
     if key not in st.session_state:
         st.session_state[key] = val
 
-# --- 2. EL BLINDAJE DE SCROLL Y ESTÉTICA GOLD SUPREME ---
-# Este bloque elimina cualquier restricción de altura en la pantalla
+# --- 2. BLINDAJE DE SCROLL Y ESTÉTICA GOLD SUPREME ---
 st.markdown("""
     <style>
-    /* FORZAR SCROLL EN TODAS LAS CAPAS */
-    .main, .stApp, .block-container {
-        height: auto !important;
-        overflow-y: auto !important;
-        max-height: none !important;
-    }
+    /* Forzar scroll en la raíz de Streamlit */
+    .stApp { overflow-y: auto !important; }
+    .main .block-container { max-width: 900px; padding-top: 2rem; }
     
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    html, body, [class*="st-"] { font-family: 'Montserrat', sans-serif; }
     
-    html, body, [class*="st-"] { 
-        font-family: 'Montserrat', sans-serif; 
-        background-color: #f8f9fa; 
+    .card-gold { 
+        background: white; padding: 40px; border-radius: 25px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; 
     }
-
-    .card-supreme { 
-        background: white; 
-        padding: 40px; 
-        border-radius: 25px; 
-        box-shadow: 0 15px 35px rgba(0,0,0,0.05); 
-        margin-bottom: 40px;
-        border: 1px solid #f0f0f0;
+    .pedagogia { 
+        border-left: 8px solid #D4AF37; background: #fafafa; 
+        padding: 25px; border-radius: 10px; margin: 20px 0; 
     }
-
-    .pedagogia-gold { 
-        border-left: 8px solid #D4AF37; 
-        background: #fdfdfd; 
-        padding: 30px; 
-        border-radius: 10px; 
-        margin: 25px 0;
-        font-size: 1.1em;
-    }
-
-    .dian-notice {
-        background: #fff3cd;
-        color: #856404;
-        padding: 15px;
-        border-radius: 10px;
-        font-size: 0.9em;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
     div.stButton > button { 
-        background: #1a1a1a !important; 
-        color: #D4AF37 !important; 
-        border-radius: 15px; 
-        height: 4em; 
-        font-weight: 700; 
-        width: 100%;
-        border: none;
+        background: #1a1a1a !important; color: #D4AF37 !important; 
+        font-weight: 700; border-radius: 12px; height: 3.5em; width: 100%; 
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. PÁGINA 1: IDENTIDAD Y BIENVENIDA ---
+# --- 3. PÁGINA 1: IDENTIDAD ---
 if st.session_state.p == 1:
-    st.markdown('<div class="card-supreme">', unsafe_allow_html=True)
-    st.title("🏆 DIMELO GOLD")
-    st.markdown("### Autoridad comercial para líderes de la industria.")
+    st.markdown('<div class="card-gold"><h1>🏆 DIMELO GOLD</h1>', unsafe_allow_html=True)
+    st.markdown("""<div class="pedagogia"><b>PEDAGOGÍA DE INICIO:</b><br>
+    Tu nombre es el sello de tu liderazgo. Para generar autoridad, 
+    debemos saber quién respalda la propuesta.</div>""", unsafe_allow_html=True)
     
-    st.markdown("""
-    <div class="pedagogia-gold">
-        <b>MENSAJE DE AUTORIDAD:</b><br>
-        Como líder y experto, sabes que la <b>identidad</b> es el primer paso del éxito. 
-        Este sistema no solo captura datos; valida quién eres para que cada palabra 
-        que dictes después tenga el peso de tu trayectoria profesional.
-    </div>
-    """, unsafe_allow_html=True)
-    
-    n = st.text_input("¿QUIÉN LIDERA ESTA VISIÓN? (Ingresa tu nombre completo)", st.session_state.n)
-    if st.button("REFORZAR MI IDENTIDAD ➡️"):
-        if n:
-            st.session_state.n = n
+    nom = st.text_input("¿CUÁL ES TU NOMBRE?", value=st.session_state.n)
+    if st.button("CONTINUAR REGISTRO ➡️"):
+        if nom:
+            st.session_state.n = nom
             st.session_state.p = 2
             st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- 4. PÁGINA 2: REGISTRO BLINDADO Y PEDAGOGÍA DINÁMICA ---
+# --- 4. PÁGINA 2: REGISTRO BLINDADO (DIAN Y SECTORES) ---
 elif st.session_state.p == 2:
-    st.markdown(f'<div class="card-supreme"><h1>🛡️ ARQUITECTURA LEGAL: {st.session_state.n.upper()}</h1></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="card-gold"><h1>🛡️ REGISTRO: {st.session_state.n.upper()}</h1>', unsafe_allow_html=True)
     
-    # Pedagogía extendida del Registro
-    st.markdown("""
-    <div class="pedagogia-gold">
-        <b>PEDAGOGÍA DEL REGISTRO:</b><br>
-        Un negocio sólido se basa en tres pilares: 
-        1. <b>Imagen:</b> Tu marca es tu sello de calidad.<br>
-        2. <b>Sector:</b> Define tu campo de batalla para ejemplos dinámicos.<br>
-        3. <b>Legalidad:</b> Cumplir con los estándares de la <b>DIAN</b> genera confianza inmediata.
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="pedagogia"><b>ESTÁNDARES DE AUTORIDAD:</b><br>
+    La DIAN exige claridad legal y el mercado exige una imagen sólida. 
+    Define tus pilares comerciales aquí.</div>""", unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2, gap="large")
-    
-    with col1:
-        st.subheader("🖼️ SELLO DE MARCA")
-        logo = st.file_uploader("Sube tu logo para validar autoridad", label_visibility="collapsed")
-        if logo:
-            st.success("✨ Marca vinculada al sistema.")
-            st.session_state.logo = True
-        else:
-            st.warning("🚨 Recomendación: Sin imagen no hay autoridad comercial.")
+    c1, c2 = st.columns(2)
+    with c1:
+        st.subheader("🖼️ IMAGEN DE MARCA")
+        up = st.file_uploader("Sube tu logo", label_visibility="collapsed")
+        if up: st.session_state.logo = True
+        else: st.warning("🚨 Recomendación: No avanzar sin imagen.")
         
         st.write("---")
         # Lista nutrida de sectores
-        sectores = ['🌾 Agro (Café, Ganado)', '🛠️ Servicios Técnicos', '🍰 Gastronomía', '🏗️ Obra y Construcción', '⚖️ Consultoría Pro', '✨ Otro']
-        st.session_state.sec = st.selectbox("¿CUÁL ES TU SECTOR?", sectores)
+        secs = ['🌾 Agropecuario', '🛠️ Técnico', '🍰 Gastronomía', '🏗️ Obra', '⚖️ Pro', '✨ Otro']
+        st.session_state.sec = st.selectbox("SECTOR:", secs)
+        ta = st.text_input("¿QUÉ HACES EXACTAMENTE?", value=st.session_state.tip)
+        if ta: 
+            st.session_state.tip = ta
+
+    with c2:
+        st.subheader("🏛️ AVISO LEGAL DIAN")
+        st.info("Define tu ruta legal para validar la propuesta.")
+        if st.button("📄 CUENTA DE COBRO"):
+            st.session_state.l = "Sencilla"
+        if st.button("🏛️ COTIZACIÓN EMPRESARIAL"):
+            st.session_state.l = "Formal"
         
-        st.info("💡 **EJEMPLO:** Si vendes café, dinos 'Cultivo de café especial'")
-        ta = st.text_input("DESCRIBE TU ACTIVIDAD:", st.session_state.tip)
-        if ta: st.session_state.tip =
+        if st.session_state.l:
+            st.success(f"Ruta activa: {st.session_state.l.upper()}")
+
+    if st.session_state.l and st.session_state.tip:
+        if st.button("ABRIR MOTOR DE PRECISIÓN 🚀"):
+            st.session_state.p = 3
+            st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# --- 5. PÁGINA 3: MOTOR DE PRECISIÓN (ALMA) ---
+elif st.session_state
